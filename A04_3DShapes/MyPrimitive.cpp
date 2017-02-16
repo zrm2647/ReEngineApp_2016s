@@ -247,13 +247,9 @@ void MyPrimitive::GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a
 	CompileObject(a_v3Color);
 }
 
-void MyPrimitive::AddTri(vector3 a_vBottomLeft, vector3 a_vBottomRight, vector3 a_vTopLeft, vector3 a_vTopRight)
+void MyPrimitive::AddTri(vector3 a_vBottomLeft, vector3 a_vBottomRight, vector3 a_vTopLeft)
 {
 	AddVertexPosition(a_vBottomLeft);
 	AddVertexPosition(a_vBottomRight);
 	AddVertexPosition(a_vTopLeft);
-
-	AddVertexPosition(a_vTopLeft);
-	AddVertexPosition(a_vBottomRight);
-	AddVertexPosition(a_vTopRight);
 }
