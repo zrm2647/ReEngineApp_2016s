@@ -114,12 +114,22 @@ void MyPrimitive::GenerateCone(float a_fRadius, float a_fHeight, int a_nSubdivis
 	//3--2
 	//|  |
 	//0--1
-	vector3 point0(-fValue, -fValue, fValue); //0
-	vector3 point1(fValue, -fValue, fValue); //1
-	vector3 point2(fValue, fValue, fValue); //2
-	vector3 point3(-fValue, fValue, fValue); //3
+	std::vector<vector3> point;
+	float theta = 0;
+	float steps = 2 * PI/ static_cast<float>(a_nSubdivisions);
 
-	AddQuad(point0, point1, point3, point2);
+	point.push_back(vector3(0.0f, 0.0f, 0.0f));
+
+	for (int i = 0; i < a_nSubdivisions; i++) {
+		point.push_back(vector3(cos(theta), sin(theta), 0));
+		theta += steps;
+	}
+
+	for (int i = 1; i < a_nSubdivisions; i++) {
+		AddTri(point[0], point[i], point[i + 1]);
+	}
+
+	AddTri(point[0], point[a_nSubdivisions], point[1]);
 
 	//Your code ends here
 	CompileObject(a_v3Color);
@@ -235,4 +245,15 @@ void MyPrimitive::GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a
 
 	//Your code ends here
 	CompileObject(a_v3Color);
+}
+
+void MyPrimitive::AddTri(vector3 a_vBottomLeft, vector3 a_vBottomRight, vector3 a_vTopLeft, vector3 a_vTopRight)
+{
+	AddVertexPosition(a_vBottomLeft);
+	AddVertexPosition(a_vBottomRight);
+	AddVertexPosition(a_vTopLeft);
+
+	AddVertexPosition(a_vTopLeft);
+	AddVertexPosition(a_vBottomRight);
+	AddVertexPosition(a_vTopRight);
 }
